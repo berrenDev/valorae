@@ -20,7 +20,7 @@ public class CategoryController implements CategoriesApi {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
 
-    //AÑADIR ENDPOINT LISTADO DE CATEGORIAS POR USUARIO
+    //AÑADIR ENDPOINT LISTADO DE CATEGORIAS POR USUARIO 
     //AÑADIR LOGS 
     @Override
     public ResponseEntity<CategoryResponse> createCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
