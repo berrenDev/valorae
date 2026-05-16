@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/GAST
+    username: GASTOS_1
+    password: sjkhewrg23ñz1asdf
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+  flyway:
+    enabled: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    url: /openapi/openapi.yaml

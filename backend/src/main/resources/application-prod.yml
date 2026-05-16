@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+# Configuration overrides for production profile
+# Add datasource, security, or other properties here.

@@ -1,0 +1,20 @@
+name: gestionapp
+
+services:
+
+  postgres:
+    image: postgres:16
+
+    environment:
+      POSTGRES_DB: GAST
+      POSTGRES_USER: GASTOS_1
+      POSTGRES_PASSWORD: sjkhewrg23ñz1asdf
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

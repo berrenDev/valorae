@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+# Configuration overrides for development profile
+# Add datasource, logging, or other properties here.
