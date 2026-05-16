@@ -20,6 +20,7 @@ public class CategoryController implements CategoriesApi {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
 
+    //AÑADIR ENDPOINT LISTADO DE CATEGORIAS POR USUARIO
     @Override
     public ResponseEntity<CategoryResponse> createCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
         CategoryResponse createdCategory = categoryMapper.toApiDomain(categoryService.createCategory(categoryMapper.fromApiDomain(createCategoryRequest)));
