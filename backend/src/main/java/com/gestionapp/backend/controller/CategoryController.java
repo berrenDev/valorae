@@ -42,12 +42,14 @@ public class CategoryController implements CategoriesApi {
 
     @Override
     public ResponseEntity<CategoryResponse> updateCategory(@PathVariable Long id, @RequestBody UpdateCategoryRequest categoryDetails) {
+        //AÑADIR CONTROL DE USUARIO ACTUAL PARA VER SI ES EL PROPIETARIO DE LA CATEGORIA
         Category updatedCategory = categoryService.updateCategory(id, categoryMapper.fromApiDomain(categoryDetails));
         return ResponseEntity.ok(categoryMapper.toApiDomain(updatedCategory));
     }
 
     @Override
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        //AÑADIR CONTROL DE USUARIO ACTUAL PARA VER SI ES EL PROPIETARIO DE LA CATEGORIA
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
