@@ -37,7 +37,7 @@ public interface CategoryMapper {
     Category fromApiDomain(CreateCategoryRequest createCategoryRequest);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user_id", ignore = true)
+    @Mapping(target = "user_id", source = "userId")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "description", source = "description")
     @Mapping(

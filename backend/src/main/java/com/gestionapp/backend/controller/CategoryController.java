@@ -42,17 +42,15 @@ public class CategoryController implements CategoriesApi {
         return ResponseEntity.ok(categories.stream().map(categoryMapper::toApiDomain).toList());
     }
 
-    @Override
-    public ResponseEntity<CategoryResponse> updateCategory(@PathVariable Long id, @RequestBody UpdateCategoryRequest categoryDetails) {
-        //AÑADIR CONTROL DE USUARIO ACTUAL PARA VER SI ES EL PROPIETARIO DE LA CATEGORIA
-        Category updatedCategory = categoryService.updateCategory(id, categoryMapper.fromApiDomain(categoryDetails));
-        return ResponseEntity.ok(categoryMapper.toApiDomain(updatedCategory));
+        @Override
+    public ResponseEntity<CategoryResponse> updateCategory(@PathVariable Long id,  @RequestBody UpdateCategoryRequest categoryDetails) {
+        CategoryResponse updatedCategory = categoryMapper.toApiDomain(categoryService.updateCategory(id,  categoryMapper.fromApiDomain(categoryDetails)));
+        return ResponseEntity.ok(updatedCategory);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        //AÑADIR CONTROL DE USUARIO ACTUAL PARA VER SI ES EL PROPIETARIO DE LA CATEGORIA
-        categoryService.deleteCategory(id);
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id, @PathVariable String userId) {
+        categoryService.deleteCategory(id,userId);
         return ResponseEntity.noContent().build();
     }
 

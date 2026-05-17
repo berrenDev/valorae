@@ -1,9 +1,9 @@
 openapi: 3.0.3
 
 info:
-  title: GestionApp API
-  description: Category management API
-  version: 1.0.0
+  title: VALORAE
+  description: Valorae API documentation
+  version: 1.0.1
 
 tags:
   - name: Categories
@@ -11,7 +11,7 @@ tags:
 
 paths:
 
-  /api/categories:
+  /valorae/categories:
 
     get:
       tags:
@@ -69,7 +69,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /api/categories/{id}:
+  /valorae/categories/{id}:
 
     get:
       tags:
@@ -103,12 +103,11 @@ paths:
 
         '500':
           $ref: '#/components/responses/InternalServerError'
-
     put:
       tags:
         - Categories
 
-      summary: Update category
+      summary: Update Category
 
       operationId: updateCategory
 
@@ -142,17 +141,21 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
         '404':
           $ref: '#/components/responses/NotFound'
 
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+  /valorae/categories/{id}/users/{userId}:
     delete:
       tags:
         - Categories
 
-      summary: Delete category
+      summary: Delete Category
 
       operationId: deleteCategory
 
@@ -164,11 +167,21 @@ paths:
           schema:
             type: integer
             format: int64
+        
+        - name: userId
+          in: path
+          required: true
+
+          schema:
+            type: string
 
       responses:
 
         '204':
           description: Category deleted successfully
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
         '404':
           $ref: '#/components/responses/NotFound'
@@ -226,6 +239,10 @@ components:
         isDefault:
           type: boolean
           example: false
+        
+        userId:
+          type: string
+          example: user_123
 
     CategoryResponse:
       type: object
@@ -296,6 +313,14 @@ components:
 
     NotFound:
       description: Resource not found
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Unauthorized
 
       content:
         application/json:

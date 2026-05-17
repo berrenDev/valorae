@@ -1,7 +1,10 @@
 package com.gestionapp.backend.validation;
 
+import java.util.Optional;
+
 import com.gestionapp.backend.entity.Category;
 import com.gestionapp.backend.exception.ResourceNotFoundException;
+import com.gestionapp.backend.exception.UnauthorizedException;
 import com.gestionapp.backend.exception.ValidationException;
 
 public final class CategoryValidations {
@@ -49,5 +52,17 @@ public final class CategoryValidations {
         if (existsByName) {
             throw new ValidationException("Category with that name already exists");
         }
+    }
+
+    public static void requireSameUser(String requestUser, String entityUser) {
+        if (!requestUser.equals(entityUser)) {
+            throw new UnauthorizedException("User is not the owner of this category");
+        }
+    }
+
+    public static void deleteValidation(Long requestCategoryId, boolean entityCategoryId, String requestUser, Optional<Category> entityUser) {
+        validateForId(requestCategoryId);
+        requireEntityExists(entityCategoryId, requestCategoryId);
+        requireSameUser(requestUser, entityUser.get().getUser_id());
     }
 }

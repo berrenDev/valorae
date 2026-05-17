@@ -14,6 +14,6 @@ public interface CategoryService {
 
     public Category updateCategory(Long id, Category categoryDetails);
 
-    public void deleteCategory(Long id);
+    public void deleteCategory(Long id, String userId);
 
 }

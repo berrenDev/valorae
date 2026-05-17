@@ -14,7 +14,6 @@ import com.gestionapp.backend.exception.DatabaseException;
 import com.gestionapp.backend.exception.ResourceNotFoundException;
 import com.gestionapp.backend.repository.CategoryRepository;
 import com.gestionapp.backend.service.CategoryService;
-import com.gestionapp.backend.util.Utils;
 import com.gestionapp.backend.validation.CategoryValidations;
 
 import lombok.AllArgsConstructor;
@@ -69,6 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             Category existing = categoryRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + id));
+            CategoryValidations.requireSameUser(category.getUser_id(), existing.getUser_id());
             existing.setName(category.getName());
             existing.setDescription(category.getDescription());
             Category updated = categoryRepository.save(existing);
@@ -81,13 +81,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void deleteCategory(Long id) {
-        CategoryValidations.validateForId(id);
-        CategoryValidations.requireEntityExists(categoryRepository.existsById(id), id);
+    public void deleteCategory(Long categoryId, String userId) {
+        CategoryValidations.deleteValidation(categoryId, categoryRepository.existsById(categoryId), userId, categoryRepository.findById(categoryId));
         try {
-            categoryRepository.deleteById(id);
+            categoryRepository.deleteById(categoryId);
         } catch (DataAccessException ex) {
-            log.error("{} - deleteCategory - Error deleting category id {} - {} - {} - {}", CLASS_NAME, id, ex.getMessage(), ex.getCause(), ex);
+            log.error("{} - deleteCategory - Error deleting category id {} - {} - {} - {}", CLASS_NAME, categoryId, ex.getMessage(), ex.getCause(), ex);
             throw new DatabaseException("Database error while deleting category", ex);
         }
     }
